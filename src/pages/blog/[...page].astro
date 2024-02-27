@@ -1,0 +1,43 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+
+import BlogCard from "../../components/BlogCard.astro";
+import { formatBlogPosts } from "../../utils";
+import Pagination from "../../components/Pagination.astro";
+
+export async function getStaticPaths({ paginate }) {
+  const posts = await Astro.glob("../../pages/blog/*.md");
+  const formattedPosts = formatBlogPosts(posts);
+
+  return paginate(formattedPosts, {
+    pageSize: 6,
+  });
+}
+
+const { page } = Astro.props;
+---
+
+<MainLayout title="New Blogs">
+  <div class="bg-gradient-to-br from-mint to-green min-h-screen">
+    <div class="flex justify-center py-20">
+      <button class="bg-dark px-4 py-2 rounded-[10px] text-xl font-bold"
+        >New Blogs</button
+      >
+    </div>
+    <div class="sm:flex sm:flex-wrap justify-center mx-3">
+      {
+        page.data.map(({ frontmatter }) => (
+          <BlogCard
+            title={frontmatter.title}
+            category={frontmatter.category}
+            url={frontmatter.url}
+            imageSrc={frontmatter.image.src}
+            imageAlt={frontmatter.image.alt}
+          />
+        ))
+      }
+    </div>
+
+    <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+  </div>
+</MainLayout>

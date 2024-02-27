@@ -1,0 +1,30 @@
+---
+import { Image } from "@astrojs/image/components";
+const { title, url, category, imageSrc, imageAlt } = Astro.props;
+
+import { slugify } from "../utils";
+---
+
+<div
+  class="p-3 pb-4 m-3 sm:mb-3 mb-6 sm:max-w-[250px] lg:max-w-[450px] text-light bg-dark rounded-[20px]"
+>
+  <a href={url} class="flex justify-center mb-3"
+    ><Image
+      src={imageSrc}
+      alt={imageAlt}
+      width={425}
+      height={225}
+      format="avif"
+      class="rounded-[10px] w-full h-full"
+    /></a
+  >
+  <a href={url}>
+    <h1 class="text-md font-medium mb-4">{title}</h1>
+  </a>
+
+  <a
+    href=`category/${slugify(category)}`
+    class="px-4 py-1 text-md font-medium bg-gradient-to-br from-mint to-green text-dark rounded-[10px]"
+    >{category}</a
+  >
+</div>

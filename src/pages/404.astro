@@ -1,0 +1,22 @@
+---
+import NoLayout from "../layouts/NoLayout.astro";
+---
+
+<NoLayout title="Not Found">
+  <div
+    class="flex flex-col justify-center items-center h-screen bg-dark text-white"
+  >
+    <div
+      class="text-xl rounded-lg font-bold p-3 text-center bg-gradient-to-br from-mint to-green max-w-xs text-dark"
+    >
+      <h1>Oops! You landed to an unknown destination</h1>
+    </div>
+    <div class="p-5 text-center">
+      <h1 class="p-1">Link to Main content</h1>
+      <div class="flex justify-evenly">
+        <p class="underline hover:text-mint"><a href="/">Blogifyi</a></p>
+        <p class="underline hover:text-mint"><a href="/about">About</a></p>
+      </div>
+    </div>
+  </div>
+</NoLayout>

@@ -1,0 +1,70 @@
+---
+import { slugify, formatBlogPosts } from "../../utils";
+import MainLayout from "../../layouts/MainLayout.astro";
+import BlogCard from "../../components/BlogCard.astro";
+
+export async function getStaticPaths() {
+  return [
+    {
+      params: { category: slugify("Next") },
+      props: { name: "Next" },
+    },
+    {
+      params: { category: slugify("React") },
+      props: { name: "React" },
+    },
+    {
+      params: { category: slugify("Coding") },
+      props: { name: "Coding" },
+    },
+    {
+      params: { category: slugify("Database") },
+      props: { name: "Database" },
+    },
+    {
+      params: { category: slugify("Blockchain") },
+      props: { name: "Blockchain" },
+    },
+    {
+      params: { category: slugify("Machine Learning") },
+      props: { name: "Machine Learning" },
+    },
+    {
+      params: { category: slugify("Artificial Intelligence") },
+      props: { name: "Artificial Intelligence" },
+    },
+  ];
+}
+
+const { category } = Astro.params;
+const { name } = Astro.props;
+
+const posts = await Astro.glob("../../pages/blog/*.md");
+const formattedPosts = formatBlogPosts(posts);
+const filteredPosts = formattedPosts.filter(
+  (post) => slugify(post.frontmatter.category) === category
+);
+---
+
+<MainLayout title={name}>
+  <div class="bg-gradient-to-br from-mint to-green min-h-screen">
+    <div class="flex justify-center py-20">
+      <button class="bg-dark px-4 py-2 rounded-[10px] text-xl font-bold"
+        >{name}</button
+      >
+    </div>
+    <div class="p-3 sm:flex sm:flex-wrap">
+      {
+        filteredPosts.map(({ frontmatter }) => (
+          <BlogCard
+            title={frontmatter.title}
+            category={frontmatter.category}
+            url={frontmatter.url}
+            imageSrc={frontmatter.image.src}
+            imageAlt={frontmatter.image.alt}
+          />
+        ))
+      }
+    </div>
+  </div>
+</MainLayout>

@@ -1,0 +1,20 @@
+---
+// Component Import
+import HeadLayout from "./HeadLayout.astro";
+
+// Style Import
+import "../styles/global.css";
+
+const {
+  title = "BLOGIFYI",
+  description = "This website contains various blockchain and web development related blog posts",
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <HeadLayout {title} {description} />
+  <body>
+    <slot>Default text</slot>
+  </body>
+</html>
